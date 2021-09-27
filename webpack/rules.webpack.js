@@ -4,6 +4,10 @@ module.exports = [
     use: 'node-loader',
   },
   {
+    test: /\.css$/i,
+    use: ['style-loader', 'css-loader'],
+  },
+  {
     test: /\.(m?js|node)$/,
     parser: { amd: false },
     use: {
@@ -17,7 +21,11 @@ module.exports = [
     test: /\.(js|ts|tsx)$/,
     exclude: /node_modules/,
     use: {
-      loader: 'babel-loader'
-    }
-  }
+      loader: 'babel-loader',
+    },
+  },
+  {
+    test: /\.json$/,
+    loader: 'json-loader',
+  },
 ]

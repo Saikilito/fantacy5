@@ -1,4 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron'
+import { IRaffleCommands } from '../common/types'
 
 export const api = {
   /**
@@ -9,7 +10,16 @@ export const api = {
    * The function below can accessed using `window.Main.sayHello`
    */
 
-  sendMessage: (message: string) => { 
+  createConnections: async () => {
+    ipcRenderer.send('dispathConnections')
+  },
+
+  raffleCommands: async (command: IRaffleCommands, data?: any) => {
+    console.info('Invoke Command')
+    return ipcRenderer.invoke('raffleCommands', command, data)
+  },
+
+  sendMessage: (message: string) => {
     ipcRenderer.send('message', message)
   },
 
@@ -18,7 +28,7 @@ export const api = {
    */
   on: (channel: string, callback: Function) => {
     ipcRenderer.on(channel, (_, data) => callback(data))
-  }
+  },
 }
 
 contextBridge.exposeInMainWorld('Main', api)
