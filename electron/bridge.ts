@@ -11,7 +11,7 @@ export const api = {
    */
 
   createConnections: async () => {
-    ipcRenderer.send('dispathConnections')
+    ipcRenderer.send('dispatchConnections')
   },
 
   raffleCommands: async (command: IRaffleCommands, data?: any) => {
