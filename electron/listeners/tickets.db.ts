@@ -5,20 +5,20 @@ import moment from 'moment'
 
 import { Constant } from '../../common/constants'
 import {
-  IRaffleCommands,
-  IRaffles,
-  IRaffle,
-  IPostRaffle,
+  ITicketCommands,
+  ITickets,
+  ITicket,
+  IPostTicket,
   IDateObject,
   LowWithChain,
 } from '../../common/types'
 
 const { DateFormat } = Constant.general
 
-let ticketDb: LowWithChain<IRaffles> | null
+let ticketDb: LowWithChain<ITickets> | null
 
 const dispatchConnections = async () => {
-  ticketDb = (await getConnection()).ticketDb as LowWithChain<IRaffles>
+  ticketDb = (await getConnection()).ticketDb as LowWithChain<ITickets>
 }
 
 const cli = async (name: string, data: any) =>
@@ -26,26 +26,26 @@ const cli = async (name: string, data: any) =>
 
 const ticketCommands = (
   _,
-  command: IRaffleCommands,
+  command: ITicketCommands,
   data?: any
 ): (() => any) => {
-  cli('Raffle Command', command)
-  const rafflesData = raffles?.data?.raffles
+  cli('Ticket Command', command)
+  const ticketsData = ticketDb?.data?.tickets
   const momentDate = moment(data?.date, DateFormat).format(DateFormat)
 
   const commands = {
     getAll: async () => {
-      cli('Get All Raffles', rafflesData)
+      cli('Get All tickets', ticketsData)
       return {
         success: true,
-        data: rafflesData,
+        data: ticketsData,
       }
     },
     getOne: () => {
       cli('flow', data)
       const id = data.id
-      cli(`Get Raffle By Id: ${id}`, null)
-      const response = raffles?.chain.get('raffles').find(data).value()
+      cli(`Get Ticket By Id: ${id}`, null)
+      const response = ticketDb?.chain.get('tickets').find(data).value()
       cli('\n Response:', response)
       return {
         success: true,
@@ -54,8 +54,8 @@ const ticketCommands = (
     },
     getByDate: () => {
       data.date = momentDate
-      cli(`Get Raffle By date: ${data?.date}`, data)
-      const response = raffles?.chain.get('raffles').filter(data).value()
+      cli(`Get Ticket By date: ${data?.date}`, data)
+      const response = ticketDb?.chain.get('tickets').filter(data).value()
       cli('\n Response:', response)
       return {
         success: true,
@@ -63,18 +63,18 @@ const ticketCommands = (
       }
     },
     getByRange: () => {
-      cli(`Get Raffle By Range: `, data?.data)
+      cli(`Get Ticket By Range: `, data?.data)
       const { startDate, endDate } = data?.data as IDateObject
-      const preresponse = raffles?.chain.get('raffles').value()
+      const preResponse = ticketDb?.chain.get('tickets').value()
 
-      const response = preresponse?.filter((raffle: IRaffle) => {
-        const dateIsAfter = moment(raffle.date, DateFormat).isAfter(
+      const response = preResponse?.filter((ticket: ITicket) => {
+        const dateIsAfter = moment(ticket.date, DateFormat).isAfter(
           moment(startDate, DateFormat).subtract(1, 'day')
         )
-        const dateIsBefore = moment(raffle.date, DateFormat).isBefore(
+        const dateIsBefore = moment(ticket.date, DateFormat).isBefore(
           moment(endDate, DateFormat).add(1, 'day')
         )
-        cli('Raffle Date', raffle.date)
+        cli('Ticket Date', ticket.date)
         console.info(
           'Date if after',
           moment(startDate, DateFormat).format(DateFormat),
@@ -94,9 +94,9 @@ const ticketCommands = (
         data: response,
       }
     },
-    create: async (raffle: IPostRaffle) => {
+    create: async (ticket: IPostTicket) => {
       // Validate data
-      if (!raffles?.data?.raffles) {
+      if (!ticketDb?.data?.tickets) {
         return {
           success: false,
           data: {},
@@ -109,14 +109,14 @@ const ticketCommands = (
       const id = dirtyId.join('/')
 
       // Clear data
-      const response = raffles?.data?.raffles?.filter(
+      const response = ticketDb?.data?.tickets?.filter(
         (data: any) => data.date !== momentDate
       )
 
       console.info('Exists?', response)
 
-      // Build new raffle
-      raffle = { date: moment().format(DateFormat), drawingNumbers: [] }
+      // Build new ticket
+      ticket = { date: moment().format(DateFormat), ticketNumbers: [] }
       response?.push({
         id,
         ...data,
@@ -124,20 +124,20 @@ const ticketCommands = (
       })
 
       // Save data base
-      raffles.data.raffles = response as IRaffle[]
-      raffles?.write()
+      ticketDb.data.tickets = response as ITicket[]
+      ticketDb?.write()
 
       return {
         success: true,
         data: {
           id,
-          ...raffle,
+          ...ticket,
         },
       }
     },
     remove: async () => {
       // Validate data
-      if (!raffles?.data?.raffles) {
+      if (!ticketDb?.data?.tickets.length) {
         return {
           success: false,
           data: {},
@@ -145,8 +145,8 @@ const ticketCommands = (
       }
 
       // Filter data by date
-      const response = raffles?.chain
-        .get('raffles')
+      const response = ticketDb?.chain
+        .get('tickets')
         .filter(({ date }: any) => {
           return date !== momentDate
         })
@@ -154,11 +154,11 @@ const ticketCommands = (
 
       // Save into db
       if (response.length) {
-        raffles.data.raffles = raffles.data.raffles.filter(
+        ticketDb.data.tickets = ticketDb.data.tickets0.filter(
           ({ date }: any) => date !== momentDate
         )
 
-        raffles.write()
+        ticketDb.write()
       }
     },
   }
@@ -168,7 +168,7 @@ const ticketCommands = (
   return commandResult()
 }
 
-export async function registerRaffleDbListeners() {
+export async function registerTicketDbListeners() {
   // Send Message
   ipcMain.on('dispatchConnections', dispatchConnections)
   ipcMain.handle('ticketCommands', ticketCommands)

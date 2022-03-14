@@ -6,6 +6,15 @@ import { raffleMocks } from './db.init'
 
 import { LowWithChain } from '../../common/types'
 
+type schemaObjectType = {
+  [x: string]: any
+}
+
+const schemaObjects = {
+  raffle: { raffles: raffleMocks },
+  tickets: { tickets: [] },
+} as schemaObjectType
+
 export async function setDBConnection(schemaName: string) {
   // Use JSON file for storage
   const file = join(`./electron/config/${schemaName}.json`)
@@ -17,7 +26,7 @@ export async function setDBConnection(schemaName: string) {
 
   // If file.json doesn't exist, db.data will be null
   // Set default data -> db.data = db.data || { raffles: [] }
-  db.data ||= { raffles: raffleMocks }
+  db.data ||= schemaObjects[schemaName]
 
   // Write db.data content to db.json
   await db.write()
@@ -33,13 +42,13 @@ export async function setDBConnection(schemaName: string) {
 }
 
 export const getConnection = async () => {
-  const connectionsName = ['raffle']
+  const connectionsName = ['raffle', 'tickets']
 
-  const [raffleDb] = await Promise.all(
+  const [raffleDb, ticketDb] = await Promise.all(
     connectionsName.map(async schemaName => await setDBConnection(schemaName))
   )
 
-  return { raffleDb }
+  return { raffleDb, ticketDb }
 }
 
 // // Create and query items using plain JS

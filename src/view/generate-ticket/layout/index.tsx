@@ -9,7 +9,7 @@ import { raffleCommands } from '../../../commands'
 import { AppContext } from '../../../context'
 
 // Components
-import { SmallContainer } from '../selected-numbers/generate-ticket.styled'
+import { SmallContainer } from '../../../components/SmallContainer'
 
 const { DateFormat } = Constant.general
 

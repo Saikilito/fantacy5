@@ -4,8 +4,13 @@ import { GlobalStyle } from '../../styles/GlobalStyle'
 import { useClearStateHook } from '../../context'
 
 // Components
-import { Button, Container } from '../../components'
-import { Image, Text } from './Home.style'
+import { Button, Container, Image } from '../../components'
+import { Text } from './Home.style'
+
+// To code
+const randomButtonStyle = {
+  width: 200,
+}
 
 export function Home() {
   useClearStateHook()
@@ -25,16 +30,24 @@ export function Home() {
         />
         <Text>Fantacy 5 - MB Software</Text>
         <Link to="/generate-ticket/selected-date">
-          <Button onClick={handleSayHello}>Generate Ticket</Button>
+          <Button style={randomButtonStyle} onClick={handleSayHello}>
+            Generate Ticket
+          </Button>
         </Link>
         <Link to="/review-raffles">
-          <Button onClick={handleSayHello}>Review Raffles</Button>
+          <Button style={randomButtonStyle} onClick={handleSayHello}>
+            Review Raffles
+          </Button>
         </Link>
         <Link to="/review-ticket">
-          <Button onClick={handleSayHello}>Review tickets</Button>
+          <Button style={randomButtonStyle} onClick={handleSayHello}>
+            Review tickets
+          </Button>
         </Link>
         <Link to="/commands">
-          <Button onClick={handleSayHello}>Commands</Button>
+          <Button style={randomButtonStyle} onClick={handleSayHello}>
+            Commands
+          </Button>
         </Link>
       </Container>
     </>

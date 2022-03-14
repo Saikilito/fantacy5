@@ -1,25 +1,26 @@
 import { useState, useEffect, useContext } from 'react'
 import { useHistory } from 'react-router'
 
-import { Constant } from '../../../../common/constants'
-
+// Helpers
 import { getArrayWithUniqueNumbersAndOrder } from '../../../helpers'
 import { getGNCObject, maxSelectedObject, initGNCOptions } from './helpers'
 
 // Context
 import { AppContext } from '../../../context'
 
-// Layout
-import { SerialHeadersLayout } from '../layout'
+// Constant
+import { Constant } from '../../../../common/constants'
 
 // Types
 import { IMapNumbers } from '../../../../common/constants/constants.types'
 import { INumberGroups } from '../../../context/AppContext.type'
 
 // Components
-import { SmallContainer } from './generate-ticket.styled'
+import { SerialHeadersLayout } from '../layout'
+import { SmallContainer } from '../../../components/SmallContainer'
 import { SelectGNC } from './component'
 
+// To code
 export function SelectedNumbers() {
   const history = useHistory()
 

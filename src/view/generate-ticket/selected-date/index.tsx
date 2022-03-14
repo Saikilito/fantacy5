@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { AppContext } from '../../../context'
 
 // Components
-import { SmallContainer } from '../selected-numbers/generate-ticket.styled'
+import { SmallContainer } from '../../../components/SmallContainer'
 import { Button } from '../../../components/Button'
 
 export function SelectedDate() {

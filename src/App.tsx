@@ -12,7 +12,12 @@ import {
   SelectedDate,
   SelectedNumbers,
   PresentSelectedNumbers,
+  ReviewRaffle,
+  AddNewRaffle,
+  RemoveRaffle,
+  GetRaffle,
 } from './view'
+
 import { CreateRaffle, GetRaffles } from './view/commands'
 
 export function App() {
@@ -39,6 +44,12 @@ export function App() {
             exact
             component={PresentSelectedNumbers}
           />
+
+          {/* Review Raffles */}
+          <Route path="/review-raffles" exact component={ReviewRaffle} />
+          <Route path="/add-new-raffle" exact component={AddNewRaffle} />
+          <Route path="/remove-raffle" exact component={RemoveRaffle} />
+          <Route path="/get-raffle" exact component={GetRaffle} />
 
           {/* Commands */}
           <Route path="/create-raffle" exact component={CreateRaffle} />
