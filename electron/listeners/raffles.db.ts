@@ -1,9 +1,13 @@
 import { ipcMain } from 'electron'
-import { getConnection } from '../config/lowdb'
 import { v4 as uuidv4 } from 'uuid'
 import moment from 'moment'
 
+// Helpers
+import { dispatchConnections } from '../listeners/connections.db'
+
+// Constant
 import { Constant } from '../../common/constants'
+
 import {
   IRaffleCommands,
   IRaffles,
@@ -13,24 +17,24 @@ import {
   LowWithChain,
 } from '../../common/types'
 
+// To code
 const { DateFormat } = Constant.general
-
-let ticketDb: LowWithChain<IRaffles> | null
-
-const dispatchConnections = async () => {
-  ticketDb = (await getConnection()).ticketDb as LowWithChain<IRaffles>
-}
 
 const cli = async (name: string, data: any) =>
   console.info(`::: ${name} :::\n`, data ?? '')
 
-const ticketCommands = (
-  _,
-  command: IRaffleCommands,
-  data?: any
-): (() => any) => {
+const raffleCommands = async (_, command: IRaffleCommands, data?: any) => {
+  let localDb: LowWithChain<IRaffles> | null = null
+
+  if (!localDb) {
+    const { raffleDb: db } = await dispatchConnections(localDb)
+    localDb = db
+  }
+
+  const raffleDb = localDb
+
   cli('Raffle Command', command)
-  const rafflesData = raffles?.data?.raffles
+  const rafflesData = raffleDb?.data?.raffles
   const momentDate = moment(data?.date, DateFormat).format(DateFormat)
 
   const commands = {
@@ -45,7 +49,7 @@ const ticketCommands = (
       cli('flow', data)
       const id = data.id
       cli(`Get Raffle By Id: ${id}`, null)
-      const response = raffles?.chain.get('raffles').find(data).value()
+      const response = raffleDb?.chain.get('raffles').find(data).value()
       cli('\n Response:', response)
       return {
         success: true,
@@ -55,8 +59,8 @@ const ticketCommands = (
     getByDate: () => {
       data.date = momentDate
       cli(`Get Raffle By date: ${data?.date}`, data)
-      const response = raffles?.chain.get('raffles').filter(data).value()
-      cli('\n Response:', response)
+      const response = raffleDb?.chain.get('raffles').filter(data).value()
+      cli('Response:', response)
       return {
         success: true,
         data: response,
@@ -65,9 +69,9 @@ const ticketCommands = (
     getByRange: () => {
       cli(`Get Raffle By Range: `, data?.data)
       const { startDate, endDate } = data?.data as IDateObject
-      const preresponse = raffles?.chain.get('raffles').value()
+      const preResponse = raffleDb?.chain.get('raffles').value()
 
-      const response = preresponse?.filter((raffle: IRaffle) => {
+      const response = preResponse?.filter((raffle: IRaffle) => {
         const dateIsAfter = moment(raffle.date, DateFormat).isAfter(
           moment(startDate, DateFormat).subtract(1, 'day')
         )
@@ -95,8 +99,9 @@ const ticketCommands = (
       }
     },
     create: async (raffle: IPostRaffle) => {
+      cli('raffle', { raffleDb, data: raffleDb?.data })
       // Validate data
-      if (!raffles?.data?.raffles) {
+      if (!raffleDb?.data?.raffles) {
         return {
           success: false,
           data: {},
@@ -109,7 +114,7 @@ const ticketCommands = (
       const id = dirtyId.join('/')
 
       // Clear data
-      const response = raffles?.data?.raffles?.filter(
+      const response = raffleDb?.data?.raffles?.filter(
         (data: any) => data.date !== momentDate
       )
 
@@ -124,8 +129,8 @@ const ticketCommands = (
       })
 
       // Save data base
-      raffles.data.raffles = response as IRaffle[]
-      raffles?.write()
+      raffleDb.data.raffles = response as IRaffle[]
+      raffleDb?.write()
 
       return {
         success: true,
@@ -137,7 +142,7 @@ const ticketCommands = (
     },
     remove: async () => {
       // Validate data
-      if (!raffles?.data?.raffles) {
+      if (!raffleDb?.data?.raffles?.length) {
         return {
           success: false,
           data: {},
@@ -145,7 +150,7 @@ const ticketCommands = (
       }
 
       // Filter data by date
-      const response = raffles?.chain
+      const response = raffleDb?.chain
         .get('raffles')
         .filter(({ date }: any) => {
           return date !== momentDate
@@ -153,13 +158,11 @@ const ticketCommands = (
         .value()
 
       // Save into db
-      if (response.length) {
-        raffles.data.raffles = raffles.data.raffles.filter(
-          ({ date }: any) => date !== momentDate
-        )
+      raffleDb.data.raffles = raffleDb.data.raffles.filter(
+        ({ date }: any) => date !== momentDate
+      )
 
-        raffles.write()
-      }
+      raffleDb.write()
     },
   }
 
@@ -170,6 +173,6 @@ const ticketCommands = (
 
 export async function registerRaffleDbListeners() {
   // Send Message
-  ipcMain.on('dispatchConnections', dispatchConnections)
-  ipcMain.handle('ticketCommands', ticketCommands)
+  ipcMain.on('dispatchRaffleConnections', async () => {})
+  ipcMain.handle('raffleCommands', raffleCommands)
 }

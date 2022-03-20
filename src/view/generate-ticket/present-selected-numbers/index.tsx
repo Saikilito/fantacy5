@@ -1,16 +1,22 @@
-import { useContext, useRef } from 'react'
+import { useContext, useRef, useEffect } from 'react'
 import Pdf from 'react-to-pdf'
 import moment from 'moment'
 
-import { AppContext } from '../../../context'
+// helpers
+import { AppContext, useClearStateHook } from '../../../context'
+import { ticketCommands } from '../../../commands'
 import { generateGuessArray } from './helpers'
-
 import { orderNumbers } from '../../../helpers'
 
-// Layout
+// Components
 import { SerialHeadersLayout } from '../layout'
-
 import { Button } from '../../../components/Button'
+
+// Constants
+import { Constant } from '../../../../common/constants'
+
+// To code
+const { DateFormat } = Constant.general
 
 const randomStyles = {
   fontWeight: 'bold',
@@ -31,6 +37,28 @@ export const PresentSelectedNumbers = () => {
     currentNumbers,
     serialHeaders
   )
+
+  const saveTicket = async () => {
+    const objectNumbers = {
+      tickets,
+      serialHeaders,
+      selectedNumbers: filterCurrentNumbers,
+    }
+    if (filterCurrentNumbers?.length === 11) {
+      console.info(objectNumbers)
+      try {
+        const formatDate = moment(date).format(DateFormat)
+        await ticketCommands.create(objectNumbers, formatDate)
+      } catch (error) {
+        alert('Error into ticket create for data base ')
+      }
+    }
+  }
+  useEffect(() => {
+    saveTicket()
+
+    return () => useClearStateHook()
+  }, [])
 
   const fileName = moment(date).format('DD/MMM/YYYY') + ' - raffles.pdf'
   return (

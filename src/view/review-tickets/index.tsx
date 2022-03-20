@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 // Helpers
@@ -12,7 +11,7 @@ const randomButtonStyle = {
   width: 200,
 }
 
-export function ReviewRaffle() {
+export function ReviewTicket() {
   useClearStateHook()
 
   return (
@@ -23,19 +22,15 @@ export function ReviewRaffle() {
         style={{ margin: '10px 0' }}
       />
 
-      <Link to="/add-new-raffle">
-        <Button style={randomButtonStyle}>Add New Raffle</Button>
+      <Link to="/get-ticket">
+        <Button style={randomButtonStyle}>Get Ticket</Button>
       </Link>
-      <Link to="/get-raffle">
-        <Button style={randomButtonStyle}>Get Raffle</Button>
-      </Link>
-      <Link to="/remove-raffle">
-        <Button style={randomButtonStyle}>Remove Raffle</Button>
+      <Link to="/remove-ticket">
+        <Button style={randomButtonStyle}>Remove Ticket</Button>
       </Link>
     </Container>
   )
 }
 
-export * from './add-new-raffle'
-export * from './remove-raffle'
-export * from './get-raffles'
+export * from './get-ticket'
+export * from './remove-ticket'

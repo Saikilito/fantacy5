@@ -8,17 +8,19 @@ import {
 import { AppProvider } from './context'
 import {
   Home,
-  Commands,
   SelectedDate,
   SelectedNumbers,
   PresentSelectedNumbers,
+  // Raffles
   ReviewRaffle,
   AddNewRaffle,
   RemoveRaffle,
   GetRaffle,
+  // Tickets
+  ReviewTicket,
+  GetTicket,
+  RemoveTicket,
 } from './view'
-
-import { CreateRaffle, GetRaffles } from './view/commands'
 
 export function App() {
   return (
@@ -26,7 +28,6 @@ export function App() {
       <AppProvider>
         <Switch>
           <Route path="/main_window" exact component={Home} />
-          <Route path="/commands" exact component={Commands} />
 
           {/* Generate Ticket */}
           <Route
@@ -51,9 +52,10 @@ export function App() {
           <Route path="/remove-raffle" exact component={RemoveRaffle} />
           <Route path="/get-raffle" exact component={GetRaffle} />
 
-          {/* Commands */}
-          <Route path="/create-raffle" exact component={CreateRaffle} />
-          <Route path="/get-raffles" exact component={GetRaffles} />
+          {/* Review Raffles */}
+          <Route path="/review-ticket" exact component={ReviewTicket} />
+          <Route path="/remove-ticket" exact component={RemoveTicket} />
+          <Route path="/get-ticket" exact component={GetTicket} />
 
           <Redirect to={{ pathname: '/main_window' }} />
           <Route path="*" exact component={Home} />

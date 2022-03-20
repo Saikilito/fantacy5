@@ -44,11 +44,6 @@ export function Home() {
             Review tickets
           </Button>
         </Link>
-        <Link to="/commands">
-          <Button style={randomButtonStyle} onClick={handleSayHello}>
-            Commands
-          </Button>
-        </Link>
       </Container>
     </>
   )

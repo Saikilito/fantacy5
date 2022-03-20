@@ -1,5 +1,6 @@
 {
   "name": "fantacy_5",
+  "productName": "Fantacy   5",
   "author": "Kembert Nieves <kembert@gmail.com>",
   "version": "1.0.0",
   "description": "",
@@ -10,7 +11,10 @@
     "make": "electron-forge make",
     "release": "electron-forge publish",
     "lint": "eslint . --ext js,ts",
-    "test": "jest"
+    "test": "jest",
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
+    "package-win": "electron-packager . fantacy-5-app --overwrite --asar=true --platform=win64 --arch=ia64 --icon=electron/assets/raffle.ico --prune=true --out=release-builds --version-string.CompanyName=MBSoftware --version-string.FileDescription=V1 --version-string.ProductName=\"Fantacy 5\"",
+    "package-linux": "electron-packager . fantacy-5-app --overwrite --asar=true --platform=linux --arch=x64 --icon=electron/assets/raffle.ico --prune=true --out=release-builds"
   },
   "keywords": [],
   "license": "MIT",
@@ -60,6 +64,8 @@
     "cross-env": "7.0.3",
     "css-loader": "^6.2.0",
     "electron": "13.1.2",
+    "electron-builder": "^22.14.13",
+    "electron-reload": "^2.0.0-alpha.1",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-config-standard": "16.0.3",

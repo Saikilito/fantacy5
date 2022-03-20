@@ -42,9 +42,9 @@ export function GetRaffle() {
       console.info(response.data)
       const [raffle] = response.data
       setRaffles(raffle?.drawingNumbers)
-      console.info('Remove Raffle Command Response: ', response)
+      console.info('Get Raffle Command Response: ', response)
     } catch (error: any) {
-      alert(`Error at Remove Raffle Command \n ${error.message}`)
+      alert(`Error at Get Raffle Command \n ${error.message}`)
     }
   }
 
@@ -79,7 +79,7 @@ export function GetRaffle() {
       <SmallContainer>
         <h2 style={{ textAlign: 'center' }}>Raffle found:</h2>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          {raffles.length ? (
+          {raffles?.length ? (
             raffles?.map(raffle => <p style={randomStyles}>{raffle}</p>)
           ) : (
             <p style={{ ...randomStyles, width: 300, padding: 10 }}>

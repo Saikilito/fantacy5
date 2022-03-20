@@ -1,9 +1,13 @@
 import { ipcMain } from 'electron'
-import { getConnection } from '../config/lowdb'
 import { v4 as uuidv4 } from 'uuid'
 import moment from 'moment'
 
+// Helpers
+import { dispatchConnections } from '../listeners/connections.db'
+
+// Constant
 import { Constant } from '../../common/constants'
+
 import {
   ITicketCommands,
   ITickets,
@@ -15,20 +19,19 @@ import {
 
 const { DateFormat } = Constant.general
 
-let ticketDb: LowWithChain<ITickets> | null
-
-const dispatchConnections = async () => {
-  ticketDb = (await getConnection()).ticketDb as LowWithChain<ITickets>
-}
-
 const cli = async (name: string, data: any) =>
   console.info(`::: ${name} :::\n`, data ?? '')
 
-const ticketCommands = (
-  _,
-  command: ITicketCommands,
-  data?: any
-): (() => any) => {
+const ticketCommands = async (_, command: ITicketCommands, data?: any) => {
+  let localDb: LowWithChain<ITickets> | null = null
+
+  if (!localDb) {
+    const { ticketDb: db } = await dispatchConnections(localDb)
+    localDb = db
+  }
+
+  const ticketDb = localDb
+
   cli('Ticket Command', command)
   const ticketsData = ticketDb?.data?.tickets
   const momentDate = moment(data?.date, DateFormat).format(DateFormat)
@@ -96,6 +99,7 @@ const ticketCommands = (
     },
     create: async (ticket: IPostTicket) => {
       // Validate data
+      cli('Ticket', { ticketDb, data: ticketDb?.data })
       if (!ticketDb?.data?.tickets) {
         return {
           success: false,
@@ -116,7 +120,13 @@ const ticketCommands = (
       console.info('Exists?', response)
 
       // Build new ticket
-      ticket = { date: moment().format(DateFormat), ticketNumbers: [] }
+      ticket = {
+        date: moment().format(DateFormat),
+        serialHeaders: [],
+        selectedNumbers: [],
+        matrixTickets: [],
+      }
+
       response?.push({
         id,
         ...data,
@@ -137,7 +147,7 @@ const ticketCommands = (
     },
     remove: async () => {
       // Validate data
-      if (!ticketDb?.data?.tickets.length) {
+      if (!ticketDb?.data?.tickets?.length) {
         return {
           success: false,
           data: {},
@@ -148,18 +158,16 @@ const ticketCommands = (
       const response = ticketDb?.chain
         .get('tickets')
         .filter(({ date }: any) => {
+          console.info('into', date, momentDate)
           return date !== momentDate
         })
         .value()
+      console.info('no entiendo', { date: data.date, momentDate, response })
 
       // Save into db
-      if (response.length) {
-        ticketDb.data.tickets = ticketDb.data.tickets0.filter(
-          ({ date }: any) => date !== momentDate
-        )
-
-        ticketDb.write()
-      }
+      ticketDb.data.tickets = response
+      console.info('cono la madre', ticketDb)
+      ticketDb.write()
     },
   }
 
@@ -170,6 +178,6 @@ const ticketCommands = (
 
 export async function registerTicketDbListeners() {
   // Send Message
-  ipcMain.on('dispatchConnections', dispatchConnections)
+  ipcMain.on('dispatchTicketConnections', async () => {})
   ipcMain.handle('ticketCommands', ticketCommands)
 }

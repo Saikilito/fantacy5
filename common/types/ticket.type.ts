@@ -7,12 +7,16 @@ export enum TicketCommands {
 export type ITicket = {
   id: string
   date: string
-  ticketNumbers: number[]
+  serialHeaders: number[]
+  selectedNumbers: number[]
+  matrixTickets: number[]
 }
 
 export type IPostTicket = {
   date: string
-  ticketNumbers: number[]
+  serialHeaders: number[]
+  selectedNumbers: number[]
+  matrixTickets: number[]
 }
 
 export type ITickets = {

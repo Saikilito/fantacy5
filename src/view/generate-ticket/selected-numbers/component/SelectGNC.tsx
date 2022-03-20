@@ -30,7 +30,7 @@ export const SelectGNC = ({
   pathLink = false,
 }: ISelectGNC) => {
   const selectOption = (
-    selectedNumbers.length >= maxSelected ? selectedNumbers : selectedOptions
+    selectedNumbers?.length >= maxSelected ? selectedNumbers : selectedOptions
   ) as OptionsOrGroups<any, any>
 
   const [selectedNumbersInto, setSelectedNumberInto] = useState([])
@@ -60,7 +60,7 @@ export const SelectGNC = ({
         {pathLink ? (
           <Link to={{ pathname: '/generate-ticket/present-selected-numbers' }}>
             <Button
-              disabled={+selectedNumbersInto.length !== +maxSelected}
+              disabled={+selectedNumbersInto?.length !== +maxSelected}
               onClick={() => handleGNCInto(selectedNumbersInto)}
             >
               Selected Numbers
@@ -68,7 +68,7 @@ export const SelectGNC = ({
           </Link>
         ) : (
           <Button
-            disabled={+selectedNumbersInto.length !== +maxSelected}
+            disabled={+selectedNumbersInto?.length !== +maxSelected}
             onClick={() => handleGNCInto(selectedNumbersInto)}
           >
             Selected Numbers

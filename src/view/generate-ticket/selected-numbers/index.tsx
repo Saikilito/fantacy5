@@ -53,7 +53,7 @@ export function SelectedNumbers() {
 
   // Set first options for be select
   const handleOptions = () => {
-    if (!raffleData.raffles.length) {
+    if (!raffleData?.raffles?.length) {
       console.info(':::: Loading Raffles... ')
       return null
     }

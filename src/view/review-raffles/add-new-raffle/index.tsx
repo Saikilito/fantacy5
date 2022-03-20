@@ -63,7 +63,7 @@ export function AddNewRaffle() {
       newRaffleNumbersNotNegativeNumbers
     ).map(n => n.toString())
 
-    if (newRaffleNumbers.length !== 5) {
+    if (newRaffleNumbers?.length !== 5) {
       return alert('You should insert 5 valid and not repeat numbers')
     }
 

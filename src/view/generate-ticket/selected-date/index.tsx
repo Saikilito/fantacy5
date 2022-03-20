@@ -37,7 +37,9 @@ export function SelectedDate() {
             style={{ display: 'block', width: '17%', alignSelf: 'center' }}
             to="/generate-ticket/selected-numbers"
           >
-            <Button>Selected Date</Button>
+            <Button style={{ width: 315, marginLeft: -5 }}>
+              Selected Date
+            </Button>
           </Link>
         </div>
       </SmallContainer>

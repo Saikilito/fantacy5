@@ -34,7 +34,7 @@ export function SerialHeadersLayout({ children }: any) {
   }, [date])
 
   const handleSelectDate = async () => {
-    if (serialHeaders.length) {
+    if (serialHeaders?.length) {
       return null
     }
 
@@ -55,7 +55,7 @@ export function SerialHeadersLayout({ children }: any) {
     setRaffleData({ raffles })
 
     // Get Serial Headers
-    const serialHeads = raffles[raffles.length - 1].drawingNumbers
+    const serialHeads = raffles[raffles?.length - 1].drawingNumbers
     setSerialHeaders(serialHeads)
     setCurrentNumbers(serialHeads)
   }
@@ -87,7 +87,7 @@ export function SerialHeadersLayout({ children }: any) {
               </div>
             ))}
         </div>
-        {!!currentSelectedNumberGroups.length &&
+        {!!currentSelectedNumberGroups?.length &&
           currentSelectedNumberGroups.map((gnc: number[], i: number) => {
             return (
               <>

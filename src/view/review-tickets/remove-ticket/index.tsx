@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import moment from 'moment'
 
 // Helpers
-import { raffleCommands } from '../../../commands'
+import { ticketCommands } from '../../../commands'
 
 // Components
 import { SmallContainer, Button } from '../../../components'
@@ -15,7 +15,7 @@ import { Constant } from '../../../../common/constants'
 // To code
 const { DateFormat } = Constant.general
 
-export function RemoveRaffle() {
+export function RemoveTicket() {
   // States
   const [date, setDate] = useState(new Date().toISOString())
 
@@ -26,10 +26,10 @@ export function RemoveRaffle() {
   const handleSubmit = async () => {
     try {
       const formatDate = moment(date).format(DateFormat)
-      const response = await raffleCommands.removeRaffle(formatDate)
-      console.info('Remove Raffle Command Response: ', response)
+      const response = await ticketCommands.removeTicket(formatDate)
+      console.info('Remove Ticket Command Response: ', response)
     } catch (error: any) {
-      alert(`Error at Remove Raffle Command \n ${error.message}`)
+      alert(`Error at Remove Ticket Command \n ${error.message}`)
     }
   }
 
@@ -37,7 +37,7 @@ export function RemoveRaffle() {
     <>
       <Link to="/main_window"> ⏪ Go Back</Link>
       <SmallContainer>
-        <h1 style={{ textAlign: 'center' }}>Remove Raffle</h1>
+        <h1 style={{ textAlign: 'center' }}>Remove Ticket</h1>
         <div
           style={{
             display: 'flex',
@@ -57,7 +57,7 @@ export function RemoveRaffle() {
             onClick={handleSubmit}
             style={{ width: 335, margin: '5px 0', alignSelf: 'center' }}
           >
-            Remove Raffle
+            Remove Ticket
           </Button>
         </div>
       </SmallContainer>
