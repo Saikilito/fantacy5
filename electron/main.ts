@@ -12,14 +12,14 @@ let mainWindow: BrowserWindow | null
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string
 
-// const assetsPath =
-//   process.env.NODE_ENV === 'production'
-//     ? process.resourcesPath
-//     : app.getAppPath()
+const assetsPath =
+  process.env.NODE_ENV === 'production'
+    ? process.resourcesPath
+    : app.getAppPath()
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    icon: path.join(__dirname, './assets/raffle.ico'),
+    icon: path.join(assetsPath, 'assets', 'raffle.ico'),
     width: 1570,
     height: 1100,
     backgroundColor: '#191622',
@@ -30,8 +30,6 @@ function createWindow() {
       devTools: true,
     },
   })
-
-  // mainWindow.setIcon(path.join(__dirname, '/electron/assets/raffle.ico'))
 
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
   mainWindow.webContents.openDevTools()
@@ -60,11 +58,3 @@ app.on('activate', () => {
     createWindow()
   }
 })
-
-app.on(
-  'certificate-error',
-  function (event, webContents, url, error, certificate, callback) {
-    event.preventDefault()
-    callback(true)
-  }
-)
