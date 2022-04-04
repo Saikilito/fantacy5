@@ -1,5 +1,5 @@
 import { join } from 'path'
-import { LowSync, JSONFileSync } from 'lowdb'
+import { Low, JSONFile } from 'lowdb'
 import lodash from 'lodash'
 
 import { raffleMocks } from './db.init'
@@ -17,9 +17,9 @@ const schemaObjects = {
 
 export async function setDBConnection(schemaName: string) {
   // Use JSON file for storage
-  const file = join(`./electron/config/${schemaName}.json`)
-  const adapter = new JSONFileSync(file)
-  const db = new LowSync(adapter) as LowWithChain
+  const file = join(__dirname, `/${schemaName}.json`)
+  const adapter = new JSONFile(file)
+  const db = new Low(adapter) as LowWithChain
 
   // Read data from JSON file, this will set db.data content
   await db.read()
