@@ -1,15 +1,16 @@
 import { Link } from 'react-router-dom'
 
-import { GlobalStyle } from '../../styles/GlobalStyle'
+// Hocks
 import { useClearStateHook } from '../../context'
 
 // Components
-import { Button, Container, Image } from '../../components'
-import { Text } from './Home.style'
+import { Layout } from '../../layout'
+import { Button, Title } from '../../components'
 
 // To code
 const randomButtonStyle = {
-  width: 200,
+  width: '100%',
+  margin: '32px auto',
 }
 
 export function Home() {
@@ -21,15 +22,15 @@ export function Home() {
   }
 
   return (
-    <>
-      <GlobalStyle />
-      <Container>
-        <Image
-          src="https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg"
-          alt="ReactJS logo"
-        />
-        <Text>Fantacy 5 - MB Software</Text>
-        <Link to="/generate-ticket/selected-date">
+    <Layout goToBack={false}>
+      <Title style={{ color: '#F2A232' }}>Fantasy 5 - MB Software</Title>
+      <div
+        style={{
+          width: 370,
+          padding: '5 12',
+        }}
+      >
+        <Link style={{ width: '80%' }} to="/generate-ticket/selected-date">
           <Button style={randomButtonStyle} onClick={handleSayHello}>
             Generate Ticket
           </Button>
@@ -44,7 +45,7 @@ export function Home() {
             Review tickets
           </Button>
         </Link>
-      </Container>
-    </>
+      </div>
+    </Layout>
   )
 }

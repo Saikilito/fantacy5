@@ -20,8 +20,9 @@ const assetsPath =
 function createWindow() {
   mainWindow = new BrowserWindow({
     icon: path.join(assetsPath, 'assets', 'raffle.ico'),
-    width: 1570,
+    width: 1000,
     height: 1100,
+    //
     backgroundColor: '#191622',
     webPreferences: {
       nodeIntegration: false,
@@ -32,7 +33,10 @@ function createWindow() {
   })
 
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
-  mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools({
+    mode: 'undocked',
+    activate: false,
+  })
 
   mainWindow.on('closed', () => {
     mainWindow = null

@@ -5,7 +5,7 @@ import { selectOptions } from './selectedOptions'
 
 // Components
 import Select, { OptionsOrGroups } from 'react-select'
-import { Button } from '../../../../components/Button'
+import { Button, Subtitle } from '../../../../components'
 
 type ISelectedOptions = {
   value: number | string
@@ -47,9 +47,9 @@ export const SelectGNC = ({
 
   return (
     <>
-      <h2>Group of complementary numbers {turn}</h2>
+      <Subtitle>Group complementary {turn}</Subtitle>
       <h4>Selected {maxSelected} numbers </h4>
-      <div>
+      <div style={{ width: '100%' }}>
         <Select
           options={selectOption}
           styles={selectOptions}

@@ -10,17 +10,19 @@ import { raffleCommands } from '../../../commands'
 import { Constant } from '../../../../common/constants'
 
 // Components
-import { SmallContainer, Button } from '../../../components'
+import { Layout } from '../../../layout'
+import { SmallContainer, Button, Title } from '../../../components'
 
 // To code
 const { DateFormat } = Constant.general
+const { orange: OrangeColor } = Constant.colors
 
 const randomStyles = {
   fontWeight: 'bold',
-  height: '18px',
-  width: '20px',
+  height: 40,
+  width: '100%',
   textAlign: 'center',
-  margin: '10px 15px',
+  margin: '15px 0',
   padding: '10px 5px',
   borderRadius: '0.3rem',
   background: '#3498db',
@@ -49,45 +51,48 @@ export function GetRaffle() {
   }
 
   return (
-    <>
-      <Link to="/main_window"> ⏪ Go Back</Link>
-      <SmallContainer>
-        <h1 style={{ textAlign: 'center' }}>Get Raffle</h1>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            width: '100%',
-          }}
-        >
-          <input
-            type="date"
-            value={date}
-            style={{ alignSelf: 'center', width: '18%' }}
-            onChange={date => handleChangeTime(date.target.value)}
-          />
+    <Layout>
+      <Title>Get Raffle</Title>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          width: '100%',
+        }}
+      >
+        <input
+          type="date"
+          value={date}
+          style={{ alignSelf: 'center', width: '100%' }}
+          onChange={date => handleChangeTime(date.target.value)}
+        />
 
-          <Button
-            onClick={handleSubmit}
-            style={{ width: 335, margin: '5px 0', alignSelf: 'center' }}
-          >
-            Get Raffle
-          </Button>
-        </div>
-      </SmallContainer>
-      <SmallContainer>
-        <h2 style={{ textAlign: 'center' }}>Raffle found:</h2>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          {raffles?.length ? (
-            raffles?.map(raffle => <p style={randomStyles}>{raffle}</p>)
-          ) : (
-            <p style={{ ...randomStyles, width: 300, padding: 10 }}>
-              Raffle not found
+        <Button onClick={handleSubmit}>Get Raffle</Button>
+      </div>
+
+      <h2 style={{ textAlign: 'center', margin: '2rem 0 1rem 0' }}>
+        Raffle found:
+      </h2>
+
+      <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+        {raffles?.length ? (
+          raffles?.map((raffle, index) => (
+            <p
+              key={index}
+              style={{
+                ...randomStyles,
+                margin: '15px 2px',
+                background: OrangeColor,
+              }}
+            >
+              {raffle}
             </p>
-          )}
-        </div>
-      </SmallContainer>
-    </>
+          ))
+        ) : (
+          <p style={{ ...randomStyles, padding: 10 }}>Raffle not found</p>
+        )}
+      </div>
+    </Layout>
   )
 }

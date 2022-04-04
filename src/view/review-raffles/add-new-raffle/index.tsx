@@ -11,7 +11,8 @@ import { raffleCommands } from '../../../commands'
 import { Constant } from '../../../../common/constants'
 
 // Components
-import { SmallContainer, Button } from '../../../components'
+import { Layout } from '../../../layout'
+import { SmallContainer, Button, Title } from '../../../components'
 import { NumberInput } from './add-new-raffle.styled'
 
 // To code
@@ -98,10 +99,9 @@ export function AddNewRaffle() {
   }
 
   return (
-    <>
-      <Link to="/main_window"> ⏪ Go Back</Link>
+    <Layout>
       <SmallContainer>
-        <h1 style={{ textAlign: 'center' }}>Add Raffle</h1>
+        <Title>Add Raffle</Title>
         <div
           style={{
             display: 'flex',
@@ -113,7 +113,7 @@ export function AddNewRaffle() {
           <input
             type="date"
             value={date}
-            style={{ alignSelf: 'center', width: '18%' }}
+            style={{ alignSelf: 'center', width: '100%' }}
             onChange={date => handleChangeTime(date.target.value)}
           />
 
@@ -134,14 +134,9 @@ export function AddNewRaffle() {
             ))}
           </div>
 
-          <Button
-            onClick={handleSubmit}
-            style={{ width: 335, margin: '5px 0', alignSelf: 'center' }}
-          >
-            Add/Update Raffle
-          </Button>
+          <Button onClick={handleSubmit}>Add/Update Raffle</Button>
         </div>
       </SmallContainer>
-    </>
+    </Layout>
   )
 }

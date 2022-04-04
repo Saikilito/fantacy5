@@ -1,15 +1,20 @@
 import styled from 'styled-components'
+import { Constant } from '../../../common/constants'
+
+const { green: GreenColor } = Constant.colors
 
 export const ButtonStyled = styled.button`
   height: 42px;
   padding: 0 24px;
 
+  width: 100%;
+
   display: flex;
   align-items: center;
   justify-content: center;
 
-  background: #8257e6;
-  border-radius: 8px;
+  background: ${GreenColor};
+  /* border-radius: 8px; */
   border: 0;
 
   color: #fff;
@@ -18,7 +23,7 @@ export const ButtonStyled = styled.button`
 
   cursor: pointer;
 
-  margin: 1rem 0.5rem;
+  margin: 1rem auto;
 
   :hover {
     filter: brightness(0.9);

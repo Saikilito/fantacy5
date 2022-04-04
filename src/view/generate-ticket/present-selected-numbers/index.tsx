@@ -63,7 +63,7 @@ export const PresentSelectedNumbers = () => {
   const fileName = moment(date).format('DD/MMM/YYYY') + ' - raffles.pdf'
   return (
     <SerialHeadersLayout>
-      <Pdf
+      {/* <Pdf
         targetRef={ref}
         filename={fileName}
         options={{ unit: 'in', format: [18, 25] }}
@@ -78,7 +78,7 @@ export const PresentSelectedNumbers = () => {
             Generate Pdf
           </Button>
         )}
-      </Pdf>
+      </Pdf> */}
 
       <div
         style={{
@@ -86,6 +86,7 @@ export const PresentSelectedNumbers = () => {
           backgroundColor: '#fff',
           padding: 30,
           color: 'black',
+          fontSize: '1rem',
         }}
         ref={ref}
       >

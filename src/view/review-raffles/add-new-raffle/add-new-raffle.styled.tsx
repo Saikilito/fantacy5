@@ -13,6 +13,10 @@ const NumberInput = (props: NumberInputProps) => {
       min={0}
       max={9}
       id={`id-${name}`}
+      style={{
+        margin: '8px 6px',
+        height: '30px',
+      }}
       {...props}
     />
   )

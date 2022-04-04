@@ -17,10 +17,10 @@ import { INumberGroups } from '../../../context/AppContext.type'
 
 // Components
 import { SerialHeadersLayout } from '../layout'
-import { SmallContainer } from '../../../components/SmallContainer'
 import { SelectGNC } from './component'
 
 // To code
+
 export function SelectedNumbers() {
   const history = useHistory()
 
@@ -142,17 +142,15 @@ export function SelectedNumbers() {
     <SerialHeadersLayout>
       {!!raffleData?.raffles?.length && (
         <>
-          <SmallContainer>
-            <SelectGNC
-              maxSelected={maxSelectedByTurn}
-              key={'selectGNC' + gncOptions.turn}
-              turn={+gncOptions.turn}
-              selectedNumbers={selectedNumbers}
-              selectedOptions={selectedOptions}
-              handleGNC={handlerGNCs}
-              pathLink={false && gncOptions.turn === 4}
-            />
-          </SmallContainer>
+          <SelectGNC
+            maxSelected={maxSelectedByTurn}
+            key={'selectGNC' + gncOptions.turn}
+            turn={+gncOptions.turn}
+            selectedNumbers={selectedNumbers}
+            selectedOptions={selectedOptions}
+            handleGNC={handlerGNCs}
+            pathLink={false && gncOptions.turn === 4}
+          />
         </>
       )}
     </SerialHeadersLayout>

@@ -1,5 +1,4 @@
 import { useEffect, useContext } from 'react'
-import { Link } from 'react-router-dom'
 import moment from 'moment'
 
 import { Constant } from '../../../../common/constants'
@@ -9,9 +8,11 @@ import { raffleCommands } from '../../../commands'
 import { AppContext } from '../../../context'
 
 // Components
-import { SmallContainer } from '../../../components/SmallContainer'
+import { Layout } from '../../../layout'
+import { Title, Subtitle } from '../../../components/'
 
 const { DateFormat } = Constant.general
+const { orange: OrangeColor } = Constant.colors
 
 export function SerialHeadersLayout({ children }: any) {
   // Global State
@@ -62,24 +63,22 @@ export function SerialHeadersLayout({ children }: any) {
 
   const randomStyles = {
     fontWeight: 'bold',
-    margin: '5px 10px',
-    padding: '5px',
+    textAlign: 'center',
+    width: '100%',
+    margin: '5px 1px',
+    padding: '10px',
     borderRadius: '0.3rem',
-    background: '#3498db',
+    background: OrangeColor,
   } as any
 
   return (
-    <div style={{ display: 'flex' }}>
-      {/* Serial Headers */}
-      <SmallContainer>
-        <Link style={{ fontWeight: 'bold' }} to="/main_window">
-          ⏪ Go Back
-        </Link>
+    <Layout maxSpace={true}>
+      <>
+        {/* Serial Headers */}
+        <h4 style={{ fontStyle: 'italic' }}>Date: {date} </h4>
 
-        <h2>Date: {date} </h2>
-
-        <h2>Serial Headers</h2>
-        <div style={{ display: 'flex' }}>
+        <Title> Serial Headers </Title>
+        <div style={{ display: 'flex', width: '100%' }}>
           {serialHeaders &&
             serialHeaders.map((number: number, index: number) => (
               <div style={randomStyles} key={'header 1' + index}>
@@ -87,12 +86,13 @@ export function SerialHeadersLayout({ children }: any) {
               </div>
             ))}
         </div>
+
         {!!currentSelectedNumberGroups?.length &&
           currentSelectedNumberGroups.map((gnc: number[], i: number) => {
             return (
               <>
-                <h2>GNC {i + 1} </h2>
-                <div style={{ display: 'flex' }}>
+                <Subtitle>Group complementary {i + 1} </Subtitle>
+                <div style={{ display: 'flex', width: '100%' }}>
                   {gnc.map((number, index) => {
                     return (
                       <div style={randomStyles} key={'gnc' + index + i}>
@@ -104,15 +104,9 @@ export function SerialHeadersLayout({ children }: any) {
               </>
             )
           })}
-      </SmallContainer>
 
-      {raffleData?.raffles?.length ? (
-        <SmallContainer>{children}</SmallContainer>
-      ) : (
-        <SmallContainer>
-          <h1>No Raffles</h1>
-        </SmallContainer>
-      )}
-    </div>
+        {raffleData?.raffles?.length ? <>{children}</> : <h1>No Raffles</h1>}
+      </>
+    </Layout>
   )
 }

@@ -1,4 +1,5 @@
 import { IMapNumbers } from './constants.types'
+import { colors } from './colors'
 
 export const Constant = {
   general: {
@@ -10,4 +11,5 @@ export const Constant = {
     '3': 'three',
     '4': 'four',
   } as IMapNumbers,
+  colors,
 }

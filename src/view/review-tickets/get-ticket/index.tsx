@@ -10,17 +10,18 @@ import { ticketCommands } from '../../../commands'
 import { Constant } from '../../../../common/constants'
 
 // Components
-import { SmallContainer, Button } from '../../../components'
+import { Layout } from '../../../layout'
+import { Button, Title } from '../../../components'
 
 // To code
 const { DateFormat } = Constant.general
 
 const randomStyles = {
   fontWeight: 'bold',
-  height: '18px',
-  width: '20px',
+  height: 40,
+  width: '100%',
   textAlign: 'center',
-  margin: '10px 15px',
+  margin: '15px 0',
   padding: '10px 5px',
   borderRadius: '0.3rem',
   background: '#3498db',
@@ -50,111 +51,101 @@ export function GetTicket() {
   }
 
   return (
-    <>
-      <Link to="/main_window"> ⏪ Go Back</Link>
-      <SmallContainer>
-        <h1 style={{ textAlign: 'center' }}>Get Ticket</h1>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            width: '100%',
-          }}
-        >
-          <input
-            type="date"
-            value={date}
-            style={{ alignSelf: 'center', width: '18%' }}
-            onChange={date => handleChangeTime(date.target.value)}
-          />
+    <Layout>
+      <Title>Get Ticket</Title>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          width: '100%',
+        }}
+      >
+        <input
+          type="date"
+          value={date}
+          style={{ alignSelf: 'center', width: '100%' }}
+          onChange={date => handleChangeTime(date.target.value)}
+        />
 
-          <Button
-            onClick={handleSubmit}
-            style={{ width: 335, margin: '5px 0', alignSelf: 'center' }}
-          >
-            Get Ticket
-          </Button>
-        </div>
-      </SmallContainer>
-      <SmallContainer>
-        <h2 style={{ textAlign: 'center' }}>Ticket found:</h2>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            justifySelf: 'center',
-          }}
-        >
-          {tickets?.objectNumbers ? (
-            <>
-              <h3 style={{ textAlign: 'center' }}>Serial Headers:</h3>
-              <div style={{ display: 'flex', justifyContent: 'center' }}>
-                {tickets?.objectNumbers?.serialHeaders?.map(
-                  (header: number) => (
-                    <p style={randomStyles}>{header}</p>
-                  )
-                )}
-              </div>
-              <hr />
-              <h3 style={{ textAlign: 'center' }}>Selected Numbers:</h3>
-              <div style={{ display: 'flex', justifyContent: 'center' }}>
-                {tickets?.objectNumbers?.selectedNumbers?.map((n: number) => (
-                  <p style={randomStyles}>{n}</p>
-                ))}
-              </div>
-              <hr />
-              <h3 style={{ textAlign: 'center' }}>Matrix Tickets:</h3>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  flexWrap: 'wrap',
-                  maxWidth: '100vw',
-                }}
-              >
-                {tickets?.objectNumbers?.tickets?.map(
-                  (matrix3D: number[][][], index: number) => (
-                    <div style={{ display: 'flex', flexDirection: 'column' }}>
-                      <h4>Matrix {index + 1}</h4>
-                      <div>
-                        {matrix3D.map((matrix, i) => (
-                          <>
-                            <div style={{ width: 600, alignSelf: 'center' }}>
-                              <h4>Sheet {i + 1}</h4>
-                              {matrix.map(array => (
-                                <>
-                                  <div
-                                    style={{
-                                      display: 'flex',
-                                      alignSelf: 'center',
-                                    }}
-                                  >
-                                    {array.map(m => (
-                                      <p>{m} - </p>
-                                    ))}
-                                  </div>
-                                </>
-                              ))}
-                              <br />
-                            </div>
+        <Button onClick={handleSubmit}>Get Ticket</Button>
+      </div>
+
+      <h2 style={{ textAlign: 'center', margin: '2rem 0 1rem 0' }}>
+        Ticket found:
+      </h2>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          justifySelf: 'center',
+          width: '100%',
+        }}
+      >
+        {tickets?.objectNumbers ? (
+          <>
+            <h3 style={{ textAlign: 'center' }}>Serial Headers:</h3>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              {tickets?.objectNumbers?.serialHeaders?.map((header: number) => (
+                <p style={randomStyles}>{header}</p>
+              ))}
+            </div>
+            <hr />
+            <h3 style={{ textAlign: 'center' }}>Selected Numbers:</h3>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              {tickets?.objectNumbers?.selectedNumbers?.map((n: number) => (
+                <p style={randomStyles}>{n}</p>
+              ))}
+            </div>
+            <hr />
+            <h3 style={{ textAlign: 'center' }}>Matrix Tickets:</h3>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                flexWrap: 'wrap',
+                maxWidth: '100vw',
+              }}
+            >
+              {tickets?.objectNumbers?.tickets?.map(
+                (matrix3D: number[][][], index: number) => (
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <h4>Matrix {index + 1}</h4>
+                    <div>
+                      {matrix3D.map((matrix, i) => (
+                        <>
+                          <div style={{ width: 600, alignSelf: 'center' }}>
+                            <h4>Sheet {i + 1}</h4>
+                            {matrix.map(array => (
+                              <>
+                                <div
+                                  style={{
+                                    display: 'flex',
+                                    alignSelf: 'center',
+                                  }}
+                                >
+                                  {array.map(m => (
+                                    <p>{m} - </p>
+                                  ))}
+                                </div>
+                              </>
+                            ))}
                             <br />
-                          </>
-                        ))}
-                      </div>
+                          </div>
+                          <br />
+                        </>
+                      ))}
                     </div>
-                  )
-                )}
-              </div>
-            </>
-          ) : (
-            <p style={{ ...randomStyles, width: 300, padding: 10 }}>
-              Ticket not found
-            </p>
-          )}
-        </div>
-      </SmallContainer>
-    </>
+                  </div>
+                )
+              )}
+            </div>
+          </>
+        ) : (
+          <p style={{ ...randomStyles, padding: 10 }}>Ticket not found</p>
+        )}
+      </div>
+    </Layout>
   )
 }

@@ -7,7 +7,8 @@ import moment from 'moment'
 import { ticketCommands } from '../../../commands'
 
 // Components
-import { SmallContainer, Button } from '../../../components'
+import { Layout } from '../../../layout'
+import { Button, Title } from '../../../components'
 
 // Constants
 import { Constant } from '../../../../common/constants'
@@ -34,33 +35,25 @@ export function RemoveTicket() {
   }
 
   return (
-    <>
-      <Link to="/main_window"> ⏪ Go Back</Link>
-      <SmallContainer>
-        <h1 style={{ textAlign: 'center' }}>Remove Ticket</h1>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            width: '100%',
-          }}
-        >
-          <input
-            type="date"
-            value={date}
-            style={{ alignSelf: 'center', width: '18%' }}
-            onChange={date => handleChangeTime(date.target.value)}
-          />
+    <Layout>
+      <Title>Remove Ticket</Title>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          width: '100%',
+        }}
+      >
+        <input
+          type="date"
+          value={date}
+          style={{ alignSelf: 'center', width: '100%' }}
+          onChange={date => handleChangeTime(date.target.value)}
+        />
 
-          <Button
-            onClick={handleSubmit}
-            style={{ width: 335, margin: '5px 0', alignSelf: 'center' }}
-          >
-            Remove Ticket
-          </Button>
-        </div>
-      </SmallContainer>
-    </>
+        <Button onClick={handleSubmit}>Remove Ticket</Button>
+      </div>
+    </Layout>
   )
 }
