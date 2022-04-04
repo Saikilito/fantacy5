@@ -9,7 +9,7 @@ const rotate = keyframes`
   }
 `
 
-export const Image = styled.img`
-  width: 240px;
+export const LogoContainer = styled.div`
+  width: 200px;
   animation: ${rotate} 15s linear infinite;
 `

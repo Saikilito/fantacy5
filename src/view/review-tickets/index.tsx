@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { useClearStateHook } from '../../context'
 
 // Components
-import { Button, Container, Image } from '../../components'
+import { Button, Container } from '../../components'
 
 // To code
 const randomButtonStyle = {
@@ -16,11 +16,11 @@ export function ReviewTicket() {
 
   return (
     <Container>
-      <Image
+      {/* <Image
         src="https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg"
         alt="ReactJS logo"
         style={{ margin: '10px 0' }}
-      />
+      /> */}
 
       <Link to="/get-ticket">
         <Button style={randomButtonStyle}>Get Ticket</Button>
