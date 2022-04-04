@@ -62,7 +62,7 @@
     "babel-loader": "8.2.2",
     "cross-env": "7.0.3",
     "css-loader": "^6.2.0",
-    "electron": "13.1.2",
+    "electron": "^13.6.9",
     "electron-builder": "^22.14.13",
     "electron-reload": "^2.0.0-alpha.1",
     "eslint": "^7.32.0",
