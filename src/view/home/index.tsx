@@ -45,6 +45,11 @@ export function Home() {
             Review tickets
           </Button>
         </Link>
+        <Link to="/find-raffle">
+          <Button style={randomButtonStyle} onClick={handleSayHello}>
+            Find Raffle
+          </Button>
+        </Link>
       </div>
     </Layout>
   )

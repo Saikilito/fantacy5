@@ -72,25 +72,25 @@ export function SerialHeadersLayout({ children }: any) {
   } as any
 
   return (
-    <Layout maxSpace={true}>
-      <>
-        {/* Serial Headers */}
-        <h4 style={{ fontStyle: 'italic' }}>Date: {date} </h4>
+    <>
+      {/* Serial Headers */}
+      <h4 style={{ fontStyle: 'italic' }}>Date: {date} </h4>
 
-        <Title> Serial Headers </Title>
-        <div style={{ display: 'flex', width: '100%' }}>
-          {serialHeaders &&
-            serialHeaders.map((number: number, index: number) => (
-              <div style={randomStyles} key={'header 1' + index}>
-                A{index + 1}: {number}
-              </div>
-            ))}
-        </div>
+      <Title> Serial Headers </Title>
+      <div style={{ display: 'flex', width: '100%' }}>
+        {serialHeaders &&
+          serialHeaders.map((number: number, index: number) => (
+            <div style={randomStyles} key={'header 1' + index}>
+              A{index + 1}: {number}
+            </div>
+          ))}
+      </div>
 
+      <div style={{ marginBottom: '3rem' }}>
         {!!currentSelectedNumberGroups?.length &&
           currentSelectedNumberGroups.map((gnc: number[], i: number) => {
             return (
-              <>
+              <div key={i}>
                 <Subtitle>Group complementary {i + 1} </Subtitle>
                 <div style={{ display: 'flex', width: '100%' }}>
                   {gnc.map((number, index) => {
@@ -101,12 +101,12 @@ export function SerialHeadersLayout({ children }: any) {
                     )
                   })}
                 </div>
-              </>
+              </div>
             )
           })}
+      </div>
 
-        {raffleData?.raffles?.length ? <>{children}</> : <h1>No Raffles</h1>}
-      </>
-    </Layout>
+      {raffleData?.raffles?.length ? <>{children}</> : <h1>No Raffles</h1>}
+    </>
   )
 }

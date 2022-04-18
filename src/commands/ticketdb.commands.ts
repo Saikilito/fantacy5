@@ -43,3 +43,10 @@ export const removeTicket = async (date: string) => {
   console.info('Exec Remove Ticket Command\n', response)
   return response
 }
+
+export const findRaffle = async (date: string, raffle: number[]) => {
+  const data = { date, raffle }
+  const response = await ticketCommands('findRaffle' as ITicketCommands, data)
+  console.info('Find Raffle result: ', response)
+  return response
+}

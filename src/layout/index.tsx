@@ -31,9 +31,10 @@ export const Layout: React.FC<LayoutType> = ({
           style={{
             width: '100%',
             height: 50,
-            position: 'absolute',
+            position: 'fixed',
             top: 0,
             background: GreenColor,
+            zIndex: 3,
           }}
         >
           <Link

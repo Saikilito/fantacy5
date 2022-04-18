@@ -1,5 +1,5 @@
 import { InputHTMLAttributes } from 'react'
-import { NumberInputStyled } from '../../../components'
+import { NumberInputStyled } from '../../components'
 
 type NumberInputProps = {
   name: string

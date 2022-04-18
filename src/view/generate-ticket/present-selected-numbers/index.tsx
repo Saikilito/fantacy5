@@ -9,6 +9,7 @@ import { generateGuessArray } from './helpers'
 import { orderNumbers } from '../../../helpers'
 
 // Components
+import { Layout } from '../../../layout'
 import { SerialHeadersLayout } from '../layout'
 import { Button } from '../../../components/Button'
 
@@ -20,7 +21,7 @@ const { DateFormat } = Constant.general
 
 const randomStyles = {
   fontWeight: 'bold',
-  height: '25px',
+  width: '100%',
   margin: '10px 5px',
   padding: '10px 5px',
   borderRadius: '0.3rem',
@@ -62,23 +63,29 @@ export const PresentSelectedNumbers = () => {
 
   const fileName = moment(date).format('DD/MMM/YYYY') + ' - raffles.pdf'
   return (
-    <SerialHeadersLayout>
-      {/* <Pdf
+    <Layout>
+      <SerialHeadersLayout />
+
+      <Pdf
         targetRef={ref}
         filename={fileName}
-        options={{ unit: 'in', format: [18, 25] }}
-        x={5}
+        options={{ unit: 'in', format: [12, 18] }}
+        x={2}
         orientation="portrait"
       >
         {({ toPdf }: any) => (
           <Button
-            style={{ width: '100%', display: 'inline', margin: '20px 0' }}
+            style={{
+              width: '100%',
+              margin: '20px 0',
+              padding: '1.5rem 0',
+            }}
             onClick={toPdf}
           >
             Generate Pdf
           </Button>
         )}
-      </Pdf> */}
+      </Pdf>
 
       <div
         style={{
@@ -86,30 +93,47 @@ export const PresentSelectedNumbers = () => {
           backgroundColor: '#fff',
           padding: 30,
           color: 'black',
-          fontSize: '1rem',
+          fontSize: '0.8rem',
+          width: '80vw',
         }}
         ref={ref}
       >
-        <div>
+        <div style={{ fontSize: '0.8rem' }}>
           <h1>Selected Numbers</h1>
           <h2>Date: {moment(date).format('DD/MMM/YYYY')} </h2>
-          <div style={{ display: 'flex' }}>
-            <h2> Headers Numbers</h2>
-            {serialHeaders &&
-              serialHeaders.map((number: number, index: number) => (
-                <div style={randomStyles} key={'g1l' + index}>
-                  A{index + 1}: {number}
-                </div>
-              ))}
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              textAlign: 'center',
+            }}
+          >
+            <h2 style={{ marginTop: '2rem' }}> Headers Numbers</h2>
+            <div style={{ display: 'flex' }}>
+              {serialHeaders &&
+                serialHeaders.map((number: number, index: number) => (
+                  <div style={randomStyles} key={'g1l' + index}>
+                    A{index + 1}: {number}
+                  </div>
+                ))}
+            </div>
           </div>
-          <div style={{ display: 'flex' }}>
-            <h2> Selected Numbers</h2>
-            {filterCurrentNumbers &&
-              filterCurrentNumbers.map((number: number, index: number) => (
-                <div style={randomStyles} key={'sn' + index}>
-                  {letters[index]}: {number}
-                </div>
-              ))}
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              textAlign: 'center',
+            }}
+          >
+            <h2 style={{ marginTop: '2rem' }}> Selected Numbers</h2>
+            <div style={{ display: 'flex' }}>
+              {filterCurrentNumbers &&
+                filterCurrentNumbers.map((number: number, index: number) => (
+                  <div style={randomStyles} key={'sn' + index}>
+                    {letters[index]}: {number}
+                  </div>
+                ))}
+            </div>
           </div>
           <div className="App"></div>
         </div>
@@ -118,64 +142,69 @@ export const PresentSelectedNumbers = () => {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
+            fontSize: '0.8rem',
           }}
         >
-          <h2>Numbers Ticket</h2>
+          <h2 style={{ marginTop: '2rem' }}>Numbers Ticket</h2>
           <br />
           {tickets.map((ts, index) => (
-            <>
-              <h2>Matrix {index + 1}</h2>
+            <div key={index}>
+              <h2 style={{ marginTop: '2rem' }}>Matrix {index + 1}</h2>
               <hr />
               <div id="container" style={{ display: 'flex' }}>
                 {ts.map((t, containerIndex) => {
                   return (
-                    <>
-                      <div
-                        id="matrix"
-                        style={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'center',
-                          width: '100%',
-                        }}
-                      >
-                        <h2> Sheet {containerIndex + 1} </h2>
-                        {t.map((vector, vectorIndex) => {
-                          const orderVector = orderNumbers(vector)
-                          return (
-                            <>
-                              <div
-                                id="vector"
-                                style={{
-                                  display: 'flex',
-                                  justifyContent: 'center',
-                                  margin: 4,
-                                  fontSize: 18,
-                                }}
-                              >
-                                <h3 style={{ margin: '0.2rem 0 0 0' }}>
-                                  Panel {panel[vectorIndex]}: {'  '}
-                                </h3>
-                                {orderVector.map(number => {
-                                  return (
-                                    <div style={{ margin: 6 }}>{number}</div>
-                                  )
-                                })}
-                              </div>
-                            </>
-                          )
-                        })}
-                        <br />
-                      </div>
-                    </>
+                    <div
+                      id="matrix"
+                      key={containerIndex}
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        width: '100%',
+                        fontSize: '0.8rem',
+                      }}
+                    >
+                      <h2> Sheet {containerIndex + 1} </h2>
+                      {t.map((vector, vectorIndex) => {
+                        const orderVector = orderNumbers(vector)
+                        return (
+                          <div
+                            id="vector"
+                            key={vectorIndex}
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'center',
+                              margin: 4,
+                              fontSize: '0.8rem',
+                            }}
+                          >
+                            <h3 style={{ margin: '0.2rem 0 0 0' }}>
+                              Panel {panel[vectorIndex]}: {'  '}
+                            </h3>
+                            {orderVector.map((number, numberIndex) => {
+                              return (
+                                <div
+                                  key={numberIndex}
+                                  style={{ margin: '6px 2px' }}
+                                >
+                                  {number}
+                                </div>
+                              )
+                            })}
+                          </div>
+                        )
+                      })}
+                      <br />
+                    </div>
                   )
                 })}
               </div>
               <hr />
-            </>
+            </div>
           ))}
         </div>
       </div>
-    </SerialHeadersLayout>
+    </Layout>
   )
 }

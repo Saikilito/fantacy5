@@ -16,7 +16,7 @@ export const ContainerStyled = styled.div`
 
 export const ContainerGrandStyled = styled.div`
   color: white;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   max-width: ${props => props.width ?? '470px'};
   margin: auto;

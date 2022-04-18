@@ -6,7 +6,7 @@
   "description": "fantasy-5",
   "main": "./.webpack/main/index.js",
   "scripts": {
-    "start": "electron-forge start",
+    "start": "rm -rf .webpack && electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "release": "electron-forge publish",

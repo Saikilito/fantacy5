@@ -21,7 +21,6 @@ export function SelectedDate() {
   }
   return (
     <Layout>
-      {/* <SmallContainer> */}
       <Title style={{ color: OrangeColor }}>Generate Ticket</Title>
 
       <div
@@ -47,7 +46,6 @@ export function SelectedDate() {
           </Button>
         </Link>
       </div>
-      {/* </SmallContainer> */}
     </Layout>
   )
 }

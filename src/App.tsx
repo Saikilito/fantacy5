@@ -20,6 +20,9 @@ import {
   ReviewTicket,
   GetTicket,
   RemoveTicket,
+
+  // Find Raffle
+  FindRaffle,
 } from './view'
 
 export function App() {
@@ -56,6 +59,9 @@ export function App() {
           <Route path="/review-ticket" exact component={ReviewTicket} />
           <Route path="/remove-ticket" exact component={RemoveTicket} />
           <Route path="/get-ticket" exact component={GetTicket} />
+
+          {/** Find Raffle */}
+          <Route path="/find-raffle" exact component={FindRaffle} />
 
           <Redirect to={{ pathname: '/main_window' }} />
           <Route path="*" exact component={Home} />

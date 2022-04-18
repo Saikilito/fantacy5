@@ -5,3 +5,5 @@ export * from './generate-ticket'
 export * from './review-raffles'
 
 export * from './review-tickets'
+
+export * from './find-raffle'

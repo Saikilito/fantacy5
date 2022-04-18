@@ -2,6 +2,7 @@ import { GenericCRUD } from './crud.type'
 
 export enum TicketCommands {
   getByDate = 'getByDate',
+  findRaffle = 'findRaffle',
 }
 
 export type ITicket = {

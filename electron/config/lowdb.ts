@@ -50,14 +50,3 @@ export const getConnection = async () => {
 
   return { raffleDb, ticketDb }
 }
-
-// // Create and query items using plain JS
-// db.data.posts.push('hello world')
-// db.data.posts[0]
-
-// // You can also use this syntax if you prefer
-// const { posts } = db.data
-// posts.push('hello world')
-
-// // Write db.data content to db.json
-// await db.write()

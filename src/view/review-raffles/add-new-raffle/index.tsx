@@ -1,5 +1,5 @@
 import { useState, ChangeEvent } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import moment from 'moment'
 
@@ -126,6 +126,7 @@ export function AddNewRaffle() {
           >
             {newArraySpace.map((_, index) => (
               <NumberInput
+                key={index}
                 name={'input' + index}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   objectInputHandlers[index](e.target.value?.toString())

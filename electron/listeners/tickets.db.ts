@@ -55,10 +55,10 @@ const ticketCommands = async (_, command: ITicketCommands, data?: any) => {
         data: response,
       }
     },
-    getByDate: () => {
-      data.date = momentDate
-      cli(`Get Ticket By date: ${data?.date}`, data)
-      const response = ticketDb?.chain.get('tickets').filter(data).value()
+    getByDate: (inputData = data) => {
+      inputData.date = momentDate
+      cli(`Get Ticket By date: ${inputData?.date}`, inputData)
+      const response = ticketDb?.chain.get('tickets').filter(inputData).value()
       cli('\n Response:', response)
       return {
         success: true,
@@ -168,6 +168,63 @@ const ticketCommands = async (_, command: ITicketCommands, data?: any) => {
       ticketDb.data.tickets = response
       console.info('cono la madre', ticketDb)
       ticketDb.write()
+    },
+    findRaffle: async () => {
+      const { raffle = [], date = null } = data
+
+      if (!raffle || !date || raffle.length < 5) {
+        return {
+          success: false,
+          error: 'Data input not valid',
+        }
+      }
+
+      const { data: ticketsData = null } = commands.getByDate({
+        date,
+      })
+
+      if (!ticketsData && ticketsData.length) {
+        return {
+          success: false,
+          error: 'Ticket not found',
+        }
+      }
+
+      const [ticket] = ticketsData
+      const {
+        objectNumbers: { tickets: rafflesInTicket },
+      } = ticket
+
+      const panelMap = ['A', 'B', 'C', 'D', 'E']
+      const rafflesInfo = rafflesInTicket
+        .map((matrix: Array<Array<Array<number>>>, matrixIndex: number) => {
+          return matrix.map((sheet, sheetIndex) => {
+            return sheet
+              .map((panel, panelIndex) => {
+                const foundNumbers = panel.filter(number =>
+                  raffle.find(r => r === number)
+                )
+                if (foundNumbers.length > 1) {
+                  return {
+                    matrix: matrixIndex + 1,
+                    sheet: sheetIndex + 1,
+                    panel: panelMap[panelIndex],
+                    foundNumbers,
+                  }
+                }
+                return null
+              })
+              .filter(Boolean)
+          })
+        })
+        .flat()
+        .flat()
+
+      console.info('::: Raffles Info :::', rafflesInfo)
+      return {
+        success: true,
+        data: rafflesInfo,
+      }
     },
   }
 

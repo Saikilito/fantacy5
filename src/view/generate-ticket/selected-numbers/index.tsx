@@ -18,6 +18,7 @@ import { INumberGroups } from '../../../context/AppContext.type'
 // Components
 import { SerialHeadersLayout } from '../layout'
 import { SelectGNC } from './component'
+import { Layout } from '../../../layout'
 
 // To code
 
@@ -139,20 +140,22 @@ export function SelectedNumbers() {
   const maxSelectedByTurn = maxSelectedObject[gncOptions?.turn] ?? 0
 
   return (
-    <SerialHeadersLayout>
-      {!!raffleData?.raffles?.length && (
-        <>
-          <SelectGNC
-            maxSelected={maxSelectedByTurn}
-            key={'selectGNC' + gncOptions.turn}
-            turn={+gncOptions.turn}
-            selectedNumbers={selectedNumbers}
-            selectedOptions={selectedOptions}
-            handleGNC={handlerGNCs}
-            pathLink={false && gncOptions.turn === 4}
-          />
-        </>
-      )}
-    </SerialHeadersLayout>
+    <Layout maxSpace={true}>
+      <SerialHeadersLayout>
+        {!!raffleData?.raffles?.length && (
+          <>
+            <SelectGNC
+              maxSelected={maxSelectedByTurn}
+              key={'selectGNC' + gncOptions.turn}
+              turn={+gncOptions.turn}
+              selectedNumbers={selectedNumbers}
+              selectedOptions={selectedOptions}
+              handleGNC={handlerGNCs}
+              pathLink={false && gncOptions.turn === 4}
+            />
+          </>
+        )}
+      </SerialHeadersLayout>
+    </Layout>
   )
 }
