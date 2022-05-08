@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
 
 import moment from 'moment'
 
@@ -8,6 +7,7 @@ import { raffleCommands } from '../../../commands'
 
 // Components
 import { SmallContainer, Button } from '../../../components'
+import { Layout } from '../../../layout'
 
 // Constants
 import { Constant } from '../../../../common/constants'
@@ -34,8 +34,7 @@ export function RemoveRaffle() {
   }
 
   return (
-    <>
-      <Link to="/main_window"> ⏪ Go Back</Link>
+    <Layout>
       <SmallContainer>
         <h1 style={{ textAlign: 'center' }}>Remove Raffle</h1>
         <div
@@ -49,7 +48,7 @@ export function RemoveRaffle() {
           <input
             type="date"
             value={date}
-            style={{ alignSelf: 'center', width: '18%' }}
+            style={{ alignSelf: 'center', width: '100%' }}
             onChange={date => handleChangeTime(date.target.value)}
           />
 
@@ -61,6 +60,6 @@ export function RemoveRaffle() {
           </Button>
         </div>
       </SmallContainer>
-    </>
+    </Layout>
   )
 }
